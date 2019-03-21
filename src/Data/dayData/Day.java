@@ -1,4 +1,4 @@
-package Data;
+package Data.dayData;
 
 import Data.workoutData.Workout;
 
@@ -22,7 +22,24 @@ public class Day {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDate date)
+    {
+        this.date=date;
+    }
+
+    public boolean isWorkoutDay() {
+        return isWorkoutDay;
+    }
+
+    public void setWorkoutDay(boolean workoutDay) {
+        isWorkoutDay = workoutDay;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
     }
 }

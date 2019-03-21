@@ -1,9 +1,8 @@
 package GUI;
 
-import Data.Day;
-import Data.workoutData.Workout;
+import Data.dayData.Day;
+import Data.dayData.Monday;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -41,15 +40,10 @@ public class Controller {
 
     public void initialize()
     {
-        Day nextDay = new Day();
-        nextDay.setDate(LocalDate.now());
-        daysOfTheWeek.add(nextDay);
-        for(int i = 0; i < 6; i++)
-        {
-            Day nDay = new Day();
-            nDay.setDate(LocalDate.now().plusDays(i));
-            daysOfTheWeek.add(nDay);
-        }
+        Monday monday = new Monday();
+
+        daysTable.getItems().add(monday);
+        daysTable.refresh();
     }
 
     @FXML

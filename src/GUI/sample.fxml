@@ -19,7 +19,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <TableView GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+      <TableView fx:id="daysTable" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
         <columns>
           <TableColumn minWidth="100.0" prefWidth="75.0" text="Monday" />
           <TableColumn minWidth="100.0" prefWidth="75.0" text="Tuesday" />

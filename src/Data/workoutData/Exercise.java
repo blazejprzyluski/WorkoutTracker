@@ -10,7 +10,7 @@ public class Exercise {
 
     public Exercise(String name)
     {
-        this.name = name;
+        this.name = "";
         this.comment = "";
         this.series = new ArrayList<>();
     }
@@ -38,5 +38,13 @@ public class Exercise {
 
     public void setSeries(List<Series> series) {
         this.series = series;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
