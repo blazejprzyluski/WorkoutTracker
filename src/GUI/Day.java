@@ -1,6 +1,6 @@
-package Data.dayData;
+package GUI;
 
-import Data.workoutData.Workout;
+import GUI.Data.workoutData.Workout;
 
 import java.time.LocalDate;
 
@@ -8,6 +8,7 @@ public class Day {
     private LocalDate date;
     private boolean isWorkoutDay = false;
     private Workout workout;
+    private String workoutData = "xD";
 
     public void addWorkout(Workout workout) {
         if(workout != null)
@@ -41,5 +42,13 @@ public class Day {
 
     public void setWorkout(Workout workout) {
         this.workout = workout;
+    }
+
+    public String getWorkoutData() {
+        return workoutData;
+    }
+
+    public void setWorkoutData(String workoutData) {
+        this.workoutData = workoutData;
     }
 }

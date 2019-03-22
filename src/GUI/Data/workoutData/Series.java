@@ -1,4 +1,4 @@
-package Data.workoutData;
+package GUI.Data.workoutData;
 
 public class Series {
     private int kgs;

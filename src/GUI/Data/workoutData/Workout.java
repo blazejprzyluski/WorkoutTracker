@@ -1,8 +1,5 @@
-package Data.workoutData;
+package GUI.Data.workoutData;
 
-import Data.workoutData.Exercise;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

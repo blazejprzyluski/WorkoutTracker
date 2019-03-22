@@ -1,9 +1,9 @@
-package Data.dayData;
+package GUI;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class Monday extends Day{
+public class Monday extends Day {
     public Monday()
     {
         setDate(LocalDate.now());
@@ -35,4 +35,5 @@ public class Monday extends Day{
             return this.getWorkout().getName();
         }
     }
+
 }

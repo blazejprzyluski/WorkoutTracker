@@ -1,4 +1,4 @@
-package Data.workoutData;
+package GUI.Data.workoutData;
 
 import java.util.ArrayList;
 import java.util.List;
