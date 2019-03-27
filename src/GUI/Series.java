@@ -1,4 +1,4 @@
-package GUI.Data.workoutData;
+package GUI;
 
 public class Series {
     private int kgs;
@@ -7,9 +7,10 @@ public class Series {
 
 
 
-    public Series(int kgs, int reps) {
+    public Series(int kgs, int reps, int setNumber) {
         this.kgs = kgs;
         this.reps = reps;
+        this.setNumber = setNumber;
     }
 
     public void setKgs(int kgs) {

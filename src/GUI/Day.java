@@ -1,7 +1,5 @@
 package GUI;
 
-import GUI.Data.workoutData.Workout;
-
 import java.time.LocalDate;
 
 public class Day {
