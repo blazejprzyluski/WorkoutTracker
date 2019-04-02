@@ -52,6 +52,6 @@ public class Workout {
 
     @Override
     public String toString() {
-        return this.name + this.date.toString();
+        return this.name + " " + this.date.toString();
     }
 }

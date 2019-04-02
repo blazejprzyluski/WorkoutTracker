@@ -3,20 +3,21 @@ package GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Controller {
 
     @FXML
-    private GridPane mainGridPane;
+    private BorderPane mainPane;
 
     @FXML
     private ListView<Exercise> workoutListView;
@@ -36,6 +37,8 @@ public class Controller {
     @FXML
     private TextArea commentArea;
 
+    @FXML
+    private ObservableList<Exercise> workouts;
 
     public void initialize()
     {
@@ -56,7 +59,7 @@ public class Controller {
         series1.add(new Series(70,8,3));
         ew.setSeries(series1);
 
-        ObservableList<Exercise> workouts = FXCollections.observableArrayList(e,ew);
+        workouts = FXCollections.observableArrayList(e);
 
         setColumn.setCellValueFactory(
                 new PropertyValueFactory<Series,Integer>("setNumber")
@@ -85,6 +88,40 @@ public class Controller {
         String s = workoutListView.getSelectionModel().getSelectedItem().getComment();
         seriesTable.setItems(workoutListView.getSelectionModel().getSelectedItem().getSeries());
         commentArea.setText(s);
+    }
+
+    @FXML
+    public void addExcersise()
+    {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainPane.getScene().getWindow());
+        dialog.setTitle("Add new Excersise");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("addSeries.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e)
+        {
+            System.out.println("Couldn't load the dialog");
+        }
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK)
+        {
+            AddSeriesController controller = fxmlLoader.getController();
+            Exercise e = controller.addExcersise();
+            workouts.add(e);
+            for(Exercise es : workouts)
+            {
+                System.out.println(es.getName());
+            }
+            workoutListView.setItems(workouts);
+            workoutListView.refresh();
+        }
     }
 
 }

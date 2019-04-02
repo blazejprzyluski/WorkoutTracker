@@ -31,7 +31,8 @@ public class Exercise {
     {
         if(kgs != 0 && reps != 0 && kgs > 0 && reps > 0)
         {
-            Series series = new Series(kgs,reps,setNumber);
+            Series set = new Series(kgs,reps,setNumber);
+            series.add(set);
         }
 
     }
