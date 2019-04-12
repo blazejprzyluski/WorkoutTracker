@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WorkoutController.AddWorkoutController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Label text="Name">
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="10.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="nameField" GridPane.rowIndex="1">
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="10.0" />
+         </padding>
+      </TextField>
+      <Label text="Date" GridPane.rowIndex="2">
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="10.0" />
+         </padding>
+      </Label>
+      <DatePicker fx:id="datePicker" GridPane.rowIndex="3">
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+         </padding>
+      </DatePicker>
+   </children>
+</GridPane>
