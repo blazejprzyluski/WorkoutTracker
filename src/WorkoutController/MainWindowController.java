@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class MainWindowController {
+
+
     @FXML
     private ListView<Workout> listView;
 
