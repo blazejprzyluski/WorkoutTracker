@@ -5,7 +5,9 @@ import java.sql.*;
 public class DataManagement {
 
     public static final String CREATE_DATABASE = "CREATE DATABASE WORKOUT_TRACKER";
-    public static final String CONNECTION_STRING  = "jdbc:postgresql://localhost:5432/test";
+    public static final String CONNECTION_STRING  = "jdbc:postgresql://localhost:5432/";
+    public static final String CONNECTION_STRING_TO_DATABASE  = "jdbc:postgresql://localhost:5432/workout_tracker";
+
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "postgres";
     public static final String CREATE_WORKOUT_TABLE = "CREATE TABLE IF NOT EXISTS WORKOUT(ID BIGSERIAL PRIMARY KEY NOT NULL,NAME VARCHAR(20) NOT NULL, DATE VARCHAR(20) NOT NULL)";
@@ -22,9 +24,6 @@ public class DataManagement {
             "INSERT INTO " + WORKOUT_TABLE_NAME + " (" + WORKOUT_NAME + "," + WORKOUT_DATE + ")"
              + " VALUES (?,?)";
 
-    public static final String test_query =
-            "INSERT INTO " + WORKOUT_TABLE_NAME + " (" + WORKOUT_NAME  + ")"
-                    + " VALUES (?)";
 
     private Connection conn;
 
@@ -42,6 +41,8 @@ public class DataManagement {
         try{
             conn = DriverManager.getConnection(CONNECTION_STRING,USERNAME,PASSWORD);
             createDatabase();
+            conn = DriverManager.getConnection(CONNECTION_STRING_TO_DATABASE,USERNAME,PASSWORD);
+            createTables();
             insertNewWorkout = conn.prepareStatement(ADD_WORKOUT_QUERY);
             return true;
         }
@@ -76,27 +77,20 @@ public class DataManagement {
         {
             try(Statement statement = conn.createStatement())
             {
-                statement.executeQuery(CREATE_DATABASE);
-                if(!checkIfTableExists())
-                {
-                    createTables(statement);
-                }
-
+                statement.executeUpdate(CREATE_DATABASE);
             }catch (SQLException e)
             {
                 e.printStackTrace();
             }
-        }else{
-            System.out.println("Database already exists");
         }
     }
 
-    private void createTables(Statement statement)
+    private void createTables()
     {
-        try {
-            statement.executeQuery(CREATE_WORKOUT_TABLE);
-            statement.executeQuery(CREATE_EXERCISE_TABLE);
-            statement.executeQuery(CREATE_SET_TABLE);
+        try(Statement statement = conn.createStatement()) {
+            statement.executeUpdate(CREATE_WORKOUT_TABLE);
+            statement.executeUpdate(CREATE_EXERCISE_TABLE);
+            statement.executeUpdate(CREATE_SET_TABLE);
         }
         catch (SQLException e)
         {

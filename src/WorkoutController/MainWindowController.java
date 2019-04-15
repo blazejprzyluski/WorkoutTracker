@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class MainWindowController {
@@ -30,6 +31,7 @@ public class MainWindowController {
     @FXML
     public void initialize()
     {
+        DataManagement.getInstance().open();
         list = FXCollections.observableArrayList();
         listView.setItems(list);
         listView.getSelectionModel().selectFirst();
@@ -98,6 +100,12 @@ public class MainWindowController {
         {
             AddWorkoutController controller = fxmlLoader.getController();
             workoutToAdd = controller.addWorkout();
+            try {
+                DataManagement.getInstance().addWorkoutToDatabase(workoutToAdd.getName(),workoutToAdd.getDate().toString());
+            }catch (SQLException e)
+            {
+                System.out.println("Error while adding to database " + e.getMessage());
+            }
             addWorkoutToList(workoutToAdd);
         }
     }
