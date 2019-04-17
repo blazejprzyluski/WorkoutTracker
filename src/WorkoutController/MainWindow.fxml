@@ -8,13 +8,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="mainPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WorkoutController.MainWindowController" onKeyPressed="#deleteWithKey">
+<BorderPane fx:id="mainPane" onKeyPressed="#deleteWithKey" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WorkoutController.MainWindowController">
    <center>
-      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" onMouseClicked="#handleView">
+      <ListView fx:id="listView" onMouseClicked="#handleView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <contextMenu>
-            <ContextMenu>
+            <ContextMenu fx:id="menu" onShown="#handleContextMenu">
               <items>
-                <MenuItem mnemonicParsing="false" text="Add series" onAction="#showExercisesDialog"/>
+                <MenuItem fx:id="addSeries" mnemonicParsing="false" onAction="#showExercisesDialog" text="Add series" />
+                  <MenuItem fx:id="editSeries" mnemonicParsing="false" text="Edit series" onAction="#handleSeriesEdit"/>
               </items>
             </ContextMenu>
          </contextMenu></ListView>
@@ -27,7 +28,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Edit" onAction="#handleEdit">
+            <Button mnemonicParsing="false" onAction="#handleWorkoutEdit" text="Edit">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>

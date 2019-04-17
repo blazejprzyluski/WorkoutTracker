@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.util.List;
+
 public class CreateExercisesAndCommentController {
     @FXML
     private TextField firstExerciseName;
@@ -191,6 +193,52 @@ public class CreateExercisesAndCommentController {
     public String getComment()
     {
         return commentArea.getText();
+    }
+
+    @FXML
+    public void editComment(Workout w)
+    {
+        if(!w.getComment().equals(commentArea.getText()))
+        {
+            w.setComment(commentArea.getText());
+        }
+    }
+
+    @FXML
+    public void setTexts()
+    {
+        firstExerciseName.setText("chuj");
+    }
+
+    @FXML
+    public void editExercises(Workout w)
+    {
+        ObservableList<Exercise> ex = w.getExercises();
+        ObservableList<Exercise> exToCompare = addExercises();
+
+        editComment(w);
+        for(int i = 0; i < ex.size();i++)
+        {
+            if(!ex.get(i).equals(exToCompare.get(i)))
+            {
+                ex.get(i).setName(exToCompare.get(i).getName());
+            }
+            ObservableList<Set> sets = ex.get(i).getReps();
+            ObservableList<Set> setsToCompare = exToCompare.get(i).getReps();
+            if(setsToCompare.get(i) != null && sets.get(i) != null)
+            {
+                System.out.println("test");
+                for(int j = 0; j < setsToCompare.size();j++)
+                {
+                    if(!sets.get(j).equals(setsToCompare.get(j)))
+                    {
+                        ex.get(i).addReps(setsToCompare);
+                    }
+                }
+            }
+
+        }
+        w.setExercises(ex);
     }
 
 

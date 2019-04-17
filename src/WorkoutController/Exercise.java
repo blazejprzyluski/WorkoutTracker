@@ -3,7 +3,9 @@ package WorkoutController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Exercise {
+import java.util.Objects;
+
+public class Exercise{
     private String name;
     private ObservableList<Set> reps;
     private String set1;
@@ -21,21 +23,39 @@ public class Exercise {
     public void addReps(ObservableList<Set> e)
     {
         this.reps = e;
-        if (e.get(0) != null && e.get(1) != null && e.get(2) !=null)
+        if(e.size() > 2)
         {
-            this.set1 = e.get(0).toString();
-            this.set2 = e.get(1).toString();
-            this.set3 = e.get(2).toString();
+            if (e.get(0) != null && e.get(1) != null && e.get(2) !=null)
+            {
+                this.set1 = e.get(0).toString();
+                this.set2 = e.get(1).toString();
+                this.set3 = e.get(2).toString();
+            }else if (e.get(0) != null && e.get(1) != null)
+            {
+                this.set1 = e.get(0).toString();
+                this.set2 = e.get(1).toString();
+            }
+            else if (e.get(0) != null)
+            {
+                this.set1 = e.get(0).toString();
+            }
         }
-        else if (e.get(0) != null && e.get(1) != null)
+        else if(e.size() > 1)
         {
-            this.set1 = e.get(0).toString();
-            this.set2 = e.get(1).toString();
+            if (e.get(0) != null && e.get(1) != null)
+            {
+                this.set1 = e.get(0).toString();
+                this.set2 = e.get(1).toString();
+            }
         }
-        else if (e.get(0) != null)
+        else if(e.size() > 0)
         {
-            this.set1 = e.get(0).toString();
+            if (e.get(0) != null)
+            {
+                this.set1 = e.get(0).toString();
+            }
         }
+
 
     }
     @Override
@@ -59,5 +79,27 @@ public class Exercise {
     public String getName()
     {
         return this.name;
+    }
+
+    public ObservableList<Set> getReps() {
+        return reps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exercise exercise = (Exercise) o;
+        return name.equals(exercise.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }

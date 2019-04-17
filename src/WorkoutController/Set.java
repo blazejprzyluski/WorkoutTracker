@@ -20,6 +20,15 @@ public class Set {
     @Override
     public String toString()
     {
-        return this.kgs + "X" + this.reps;
+        return this.kgs + "kg X " + this.reps;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o){return true;}
+        if(o == null || this.getClass() != o.getClass()){return false;}
+        Set s = (Set) o;
+        return (this.kgs == ((Set) o).getKgs() && this.reps == ((Set) o).getReps());
     }
 }
