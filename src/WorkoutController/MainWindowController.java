@@ -267,7 +267,6 @@ public class MainWindowController {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         CreateExercisesAndCommentController controller = fxmlLoader.getController();
-        controller.test();
         Optional<ButtonType> result = dialog.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {

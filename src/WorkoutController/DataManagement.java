@@ -58,6 +58,9 @@ public class DataManagement {
     public static final String GET_EXERCISE_NAMES = "SELECT " + EXERCISE_NAME + " FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_WORKOUT_ID + " = ?";
     public static final String GET_SET_KGS = "SELECT " + SET_KGS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
     public static final String GET_SET_REPS = "SELECT " + SET_REPS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
+    public static final String UPDATE_EXERCISE = "UPDATE " + EXERCISE_TABLE_NAME + " SET " + EXERCISE_NAME + " = ? WHERE id = ?";
+    public static final String UPDATE_SET = "UPDATE " + SET_TABLE_NAME + " SET " + SET_KGS  + " = ? , " + SET_REPS  + " = ? WHERE id = ?";
+    public static final String GET_SET_ID = "SELECT id FROM " + SET_TABLE_NAME + " WHERE " + SET_KGS + " = ? AND " + SET_REPS + " = ? AND " + SET_EXERCISE_ID + " = ?";
 
 
 
@@ -76,6 +79,9 @@ public class DataManagement {
     private PreparedStatement getExerciseNames = null;
     private PreparedStatement getSetKgs = null;
     private PreparedStatement getSetReps = null;
+    private PreparedStatement updateExercise = null;
+    private PreparedStatement updateSet = null;
+    private PreparedStatement getSetID = null;
 
 
     ///making a singleton
@@ -84,18 +90,6 @@ public class DataManagement {
     private DataManagement(){}
 
     public static DataManagement getInstance(){return instance;}
-
-    private void preparedStatementOpener(PreparedStatement ps,String sql)
-    {
-        try
-        {
-            ps = conn.prepareStatement(sql);
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public boolean open()
     {
@@ -118,6 +112,9 @@ public class DataManagement {
             getExerciseNames = conn.prepareStatement(GET_EXERCISE_NAMES);
             getSetKgs = conn.prepareStatement(GET_SET_KGS);
             getSetReps = conn.prepareStatement(GET_SET_REPS);
+            updateExercise= conn.prepareStatement(UPDATE_EXERCISE);
+            updateSet = conn.prepareStatement(UPDATE_SET);
+            getSetID = conn.prepareStatement(GET_SET_ID);
 
             return true;
         }
@@ -185,6 +182,21 @@ public class DataManagement {
                 getSetKgs.close();
             }
 
+            if(updateSet != null)
+            {
+                updateSet.close();
+            }
+
+            if(updateExercise != null)
+            {
+                updateExercise.close();
+            }
+
+            if(getSetID != null)
+            {
+                getSetID.close();
+            }
+
 
             if(conn != null)
             {
@@ -244,35 +256,6 @@ public class DataManagement {
         }
     }
 
-    private boolean checkIfTableExists()
-    {
-        boolean checker1 = true;
-        boolean checker2 = true;
-        boolean checker3 = true;
-        boolean sum = true;
-        try{
-            Statement s = conn.createStatement();
-            ResultSet r = s.executeQuery(CHECK_IF_TABLE_EXISTS + "'workout')");
-            r.next();
-            checker1 = r.getString(1).equals("t");
-             r = s.executeQuery(CHECK_IF_TABLE_EXISTS + "'exercise')");
-            r.next();
-            checker2 = r.getString(1).equals("t");
-            r = s.executeQuery(CHECK_IF_TABLE_EXISTS + "'set')");
-            r.next();
-            checker3 = r.getString(1).equals("t");
-            if(checker1 == false || checker2 == false || checker3 == false)
-            {
-                sum = false;
-            }
-            return sum;
-
-        }catch (SQLException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     public int getWorkoutId(String name, String date)
     {
@@ -548,6 +531,60 @@ public class DataManagement {
             lista.add(s);
         }
         return lista;
+    }
+
+    public void updateExercise(String name, int exercise_id)
+    {
+        try{
+            updateExercise.setString(1,name);
+            updateExercise.setInt(2,exercise_id);
+            updateExercise.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
+    public int getSetID(int kgs, int reps, int exercise_id)
+    {
+        int id = 0;
+        try{
+            getSetID.setInt(1,kgs);
+            getSetID.setInt(2,reps);
+            getSetID.setInt(3,exercise_id);
+
+            ResultSet set = getSetID.executeQuery();
+
+            if(set.next())
+            {
+                id = set.getInt(1);
+            }
+            return id;
+
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+        }
+
+        return id;
+    }
+
+    public void updateSet(int kgs, int reps, int id)
+    {
+        try{
+            updateSet.setInt(1,kgs);
+            updateSet.setInt(2,reps);
+            updateSet.setInt(3,id);
+            updateSet.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

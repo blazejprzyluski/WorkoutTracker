@@ -20,7 +20,13 @@ public class Set {
     @Override
     public String toString()
     {
-        return this.kgs + "kg X " + this.reps;
+        if(this.kgs > 0 && this.reps > 0)
+        {
+            return this.kgs + "kg X " + this.reps;
+        }
+        else {
+            return "";
+        }
     }
 
     @Override
