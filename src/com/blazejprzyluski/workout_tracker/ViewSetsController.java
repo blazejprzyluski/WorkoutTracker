@@ -1,5 +1,7 @@
 package com.blazejprzyluski.workout_tracker;
 
+import com.blazejprzyluski.workout_tracker.data.Exercise;
+import com.blazejprzyluski.workout_tracker.data.Workout;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

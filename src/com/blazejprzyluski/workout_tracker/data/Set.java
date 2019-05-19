@@ -1,4 +1,4 @@
-package com.blazejprzyluski.workout_tracker;
+package com.blazejprzyluski.workout_tracker.data;
 
 public class Set {
     private int kgs;

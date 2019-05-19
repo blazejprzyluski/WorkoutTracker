@@ -1,4 +1,4 @@
-package com.blazejprzyluski.workout_tracker;
+package com.blazejprzyluski.workout_tracker.data;
 
 import javafx.collections.ObservableList;
 
@@ -61,18 +61,6 @@ public class Exercise{
     public String toString()
     {
         return  this.reps + "";
-    }
-
-    public String getSet1() {
-        return set1;
-    }
-
-    public String getSet2() {
-        return set2;
-    }
-
-    public String getSet3() {
-        return set3;
     }
 
     public String getName()

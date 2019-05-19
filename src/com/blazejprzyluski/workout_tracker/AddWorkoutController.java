@@ -1,5 +1,6 @@
 package com.blazejprzyluski.workout_tracker;
 
+import com.blazejprzyluski.workout_tracker.data.Workout;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

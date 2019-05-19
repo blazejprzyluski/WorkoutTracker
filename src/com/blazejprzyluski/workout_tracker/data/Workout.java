@@ -1,4 +1,4 @@
-package com.blazejprzyluski.workout_tracker;
+package com.blazejprzyluski.workout_tracker.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

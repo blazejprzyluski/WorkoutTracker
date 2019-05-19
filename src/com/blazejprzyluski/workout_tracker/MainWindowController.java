@@ -1,5 +1,8 @@
 package com.blazejprzyluski.workout_tracker;
 
+import com.blazejprzyluski.workout_tracker.data.Exercise;
+import com.blazejprzyluski.workout_tracker.data.Set;
+import com.blazejprzyluski.workout_tracker.data.Workout;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
