@@ -1,8 +1,7 @@
-package WorkoutController;
+package com.blazejprzyluski.workout_tracker;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 
 import java.time.LocalDate;
 

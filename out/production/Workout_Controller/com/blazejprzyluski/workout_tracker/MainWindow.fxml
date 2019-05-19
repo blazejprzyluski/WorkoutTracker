@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="mainPane" onKeyPressed="#deleteWithKey" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.blazejprzyluski.workout_tracker.MainWindowController">
+   <center>
+      <ListView fx:id="listView" onMouseClicked="#handleView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <contextMenu>
+            <ContextMenu fx:id="menu" onShown="#handleContextMenu">
+              <items>
+                <MenuItem fx:id="addSeries" mnemonicParsing="false" onAction="#showExercisesDialog" text="Add series" />
+                  <MenuItem fx:id="editSeries" mnemonicParsing="false" text="Edit series" onAction="#handleSeriesEdit"/>
+              </items>
+            </ContextMenu>
+         </contextMenu></ListView>
+   </center>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleAdd" text="Add Workout">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleWorkoutEdit" text="Edit">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleDelete" text="Delete">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

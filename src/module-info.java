@@ -3,5 +3,5 @@ module WorkoutController {
     requires javafx.fxml;
     requires java.sql;
 
-    opens WorkoutController;
+    opens com.blazejprzyluski.workout_tracker;
 }

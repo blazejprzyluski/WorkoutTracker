@@ -1,4 +1,4 @@
-package WorkoutController;
+package com.blazejprzyluski.workout_tracker;
 
 public class Set {
     private int kgs;

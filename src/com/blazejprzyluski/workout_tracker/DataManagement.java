@@ -1,66 +1,60 @@
-package WorkoutController;
+package com.blazejprzyluski.workout_tracker;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.security.PrivilegedAction;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataManagement {
 
-    public static final String CREATE_DATABASE = "CREATE DATABASE WORKOUT_TRACKER";
-    public static final String CONNECTION_STRING  = "jdbc:postgresql://localhost:5432/";
-    public static final String CONNECTION_STRING_TO_DATABASE  = "jdbc:postgresql://localhost:5432/workout_tracker";
+    private static final String CREATE_DATABASE = "CREATE DATABASE WORKOUT_TRACKER";
+    private static final String CONNECTION_STRING  = "jdbc:postgresql://localhost:5432/";
+    private static final String CONNECTION_STRING_TO_DATABASE  = "jdbc:postgresql://localhost:5432/workout_tracker";
 
-    public static final String WORKOUT_TABLE_NAME = "workout";
-    public static final String WORKOUT_NAME = "name";
-    public static final String WORKOUT_DATE = "date";
-    public static final String WORKOUT_COMMENT = "comment";
-    public static final String EXERCISE_TABLE_NAME = "exercise";
-    public static final String EXERCISE_NAME = "name";
-    public static final String EXERCISE_WORKOUT_ID = "workout_id";
-    public static final String SET_TABLE_NAME = "set";
-    public static final String SET_KGS = "kgs";
-    public static final String SET_REPS = "reps";
-    public static final String SET_EXERCISE_ID = "exercise_id";
+    private static final String WORKOUT_TABLE_NAME = "workout";
+    private static final String WORKOUT_NAME = "name";
+    private static final String WORKOUT_DATE = "date";
+    private static final String WORKOUT_COMMENT = "comment";
+    private static final String EXERCISE_TABLE_NAME = "exercise";
+    private static final String EXERCISE_NAME = "name";
+    private static final String EXERCISE_WORKOUT_ID = "workout_id";
+    private static final String SET_TABLE_NAME = "set";
+    private static final String SET_KGS = "kgs";
+    private static final String SET_REPS = "reps";
+    private static final String SET_EXERCISE_ID = "exercise_id";
 
-    public static final String USERNAME = "postgres";
-    public static final String PASSWORD = "postgres";
-    public static final String CREATE_WORKOUT_TABLE = "CREATE TABLE IF NOT EXISTS WORKOUT(ID BIGSERIAL PRIMARY KEY NOT NULL,NAME VARCHAR(20) NOT NULL, DATE VARCHAR(20) NOT NULL, COMMENT VARCHAR(500))";
-    public static final String CREATE_EXERCISE_TABLE = "CREATE TABLE IF NOT EXISTS EXERCISE(ID BIGSERIAL PRIMARY KEY NOT NULL, NAME VARCHAR(50) NOT NULL, WORKOUT_ID INT NOT NULL)";
-    public static final String CREATE_SET_TABLE = "CREATE TABLE IF NOT EXISTS SET(ID BIGSERIAL PRIMARY KEY NOT NULL, KGS INT NOT NULL, REPS INT NOT NULL,EXERCISE_ID INT NOT NULL)";
-    public static final String CHECK_IF_DB_EXISTS = "SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower('workout_tracker')";
-    public static final String CHECK_IF_TABLE_EXISTS = "SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = ";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "postgres";
+    private static final String CREATE_WORKOUT_TABLE = "CREATE TABLE IF NOT EXISTS WORKOUT(ID BIGSERIAL PRIMARY KEY NOT NULL,NAME VARCHAR(20) NOT NULL, DATE VARCHAR(20) NOT NULL, COMMENT VARCHAR(500))";
+    private static final String CREATE_EXERCISE_TABLE = "CREATE TABLE IF NOT EXISTS EXERCISE(ID BIGSERIAL PRIMARY KEY NOT NULL, NAME VARCHAR(50) NOT NULL, WORKOUT_ID INT NOT NULL)";
+    private static final String CREATE_SET_TABLE = "CREATE TABLE IF NOT EXISTS SET(ID BIGSERIAL PRIMARY KEY NOT NULL, KGS INT NOT NULL, REPS INT NOT NULL,EXERCISE_ID INT NOT NULL)";
+    private static final String CHECK_IF_DB_EXISTS = "SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower('workout_tracker')";
 
+    private static final String GET_WORKOUT_ID_QUERY = "SELECT id FROM WORKOUT WHERE " + WORKOUT_NAME + " = ? AND " + WORKOUT_DATE + " = ?";
+    private static final String GET_EXERCISE_ID = "SELECT id FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_NAME + " = ?" + " AND " + EXERCISE_WORKOUT_ID + " = ?";
 
-
-
-    public static final String GET_WORKOUT_ID_QUERY = "SELECT id FROM WORKOUT WHERE " + WORKOUT_NAME + " = ? AND " + WORKOUT_DATE + " = ?";
-    public static final String GET_EXERCISE_ID = "SELECT id FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_NAME + " = ?" + " AND " + EXERCISE_WORKOUT_ID + " = ?";
-
-    public static final String ADD_WORKOUT_QUERY =
+    private static final String ADD_WORKOUT_QUERY =
             "INSERT INTO " + WORKOUT_TABLE_NAME + " (" + WORKOUT_NAME + "," + WORKOUT_DATE + ")"
              + " VALUES (?,?)";
-    public static final String ADD_EXERCISE_QUERY = "INSERT INTO " + EXERCISE_TABLE_NAME + " (" + EXERCISE_NAME + "," + EXERCISE_WORKOUT_ID + ")" + " VALUES (?,?)";
-    public static final String ADD_SET_QUERY = "INSERT INTO " + SET_TABLE_NAME + " (" + SET_KGS + "," + SET_REPS + "," + SET_EXERCISE_ID + ") " + "VALUES (?,?,?)";
-    public static final String ADD_COMMENT_QUERY = "UPDATE " + WORKOUT_TABLE_NAME + " SET " + WORKOUT_COMMENT + " = ? WHERE id = ?";
-    public static final String UPDATE_WORKOUT = "UPDATE " + WORKOUT_TABLE_NAME + " SET " + WORKOUT_NAME + " = ? " + "," + WORKOUT_DATE + " = ? WHERE id = ?";
-    public static final String DELETE_WORKOUT = "DELETE FROM " + WORKOUT_TABLE_NAME + " WHERE id = ?";
-    public static final String DELETE_EXERCISE = "DELETE FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_WORKOUT_ID + " = ?";
-    public static final String DELETE_SET = "DELETE FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
-    public static final String GET_WORKOUT_NAMES = "SELECT " +WORKOUT_NAME +" FROM " + WORKOUT_TABLE_NAME;
-    public static final String GET_WORKOUT_DATES = "SELECT " +WORKOUT_DATE +" FROM " + WORKOUT_TABLE_NAME;
-    public static final String GET_WORKOUT_COMMENT = "SELECT " + WORKOUT_COMMENT + " FROM " + WORKOUT_TABLE_NAME;
-    public static final String GET_EXERCISE_NAMES = "SELECT " + EXERCISE_NAME + " FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_WORKOUT_ID + " = ?";
-    public static final String GET_SET_KGS = "SELECT " + SET_KGS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
-    public static final String GET_SET_REPS = "SELECT " + SET_REPS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
-    public static final String UPDATE_EXERCISE = "UPDATE " + EXERCISE_TABLE_NAME + " SET " + EXERCISE_NAME + " = ? WHERE id = ?";
-    public static final String UPDATE_SET = "UPDATE " + SET_TABLE_NAME + " SET " + SET_KGS  + " = ? , " + SET_REPS  + " = ? WHERE id = ?";
-    public static final String GET_SET_ID = "SELECT id FROM " + SET_TABLE_NAME + " WHERE " + SET_KGS + " = ? AND " + SET_REPS + " = ? AND " + SET_EXERCISE_ID + " = ?";
+    private static final String ADD_EXERCISE_QUERY = "INSERT INTO " + EXERCISE_TABLE_NAME + " (" + EXERCISE_NAME + "," + EXERCISE_WORKOUT_ID + ")" + " VALUES (?,?)";
+    private static final String ADD_SET_QUERY = "INSERT INTO " + SET_TABLE_NAME + " (" + SET_KGS + "," + SET_REPS + "," + SET_EXERCISE_ID + ") " + "VALUES (?,?,?)";
+    private static final String ADD_COMMENT_QUERY = "UPDATE " + WORKOUT_TABLE_NAME + " SET " + WORKOUT_COMMENT + " = ? WHERE id = ?";
+    private static final String UPDATE_WORKOUT = "UPDATE " + WORKOUT_TABLE_NAME + " SET " + WORKOUT_NAME + " = ? " + "," + WORKOUT_DATE + " = ? WHERE id = ?";
+    private static final String DELETE_WORKOUT = "DELETE FROM " + WORKOUT_TABLE_NAME + " WHERE id = ?";
+    private static final String DELETE_EXERCISE = "DELETE FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_WORKOUT_ID + " = ?";
+    private static final String DELETE_SET = "DELETE FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
+    private static final String GET_WORKOUT_NAMES = "SELECT " +WORKOUT_NAME +" FROM " + WORKOUT_TABLE_NAME;
+    private static final String GET_WORKOUT_DATES = "SELECT " +WORKOUT_DATE +" FROM " + WORKOUT_TABLE_NAME;
+    private static final String GET_WORKOUT_COMMENT = "SELECT " + WORKOUT_COMMENT + " FROM " + WORKOUT_TABLE_NAME;
+    private static final String GET_EXERCISE_NAMES = "SELECT " + EXERCISE_NAME + " FROM " + EXERCISE_TABLE_NAME + " WHERE " + EXERCISE_WORKOUT_ID + " = ?";
+    private static final String GET_SET_KGS = "SELECT " + SET_KGS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
+    private static final String GET_SET_REPS = "SELECT " + SET_REPS + " FROM " + SET_TABLE_NAME + " WHERE " + SET_EXERCISE_ID + " = ?";
+    private static final String UPDATE_EXERCISE = "UPDATE " + EXERCISE_TABLE_NAME + " SET " + EXERCISE_NAME + " = ? WHERE id = ?";
+    private static final String UPDATE_SET = "UPDATE " + SET_TABLE_NAME + " SET " + SET_KGS  + " = ? , " + SET_REPS  + " = ? WHERE id = ?";
+    private static final String GET_SET_ID = "SELECT id FROM " + SET_TABLE_NAME + " WHERE " + SET_KGS + " = ? AND " + SET_REPS + " = ? AND " + SET_EXERCISE_ID + " = ?";
 
 
 
